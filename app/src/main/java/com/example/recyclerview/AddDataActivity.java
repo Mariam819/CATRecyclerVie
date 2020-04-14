@@ -21,6 +21,11 @@ public class AddDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_data);
         initView();
+        if (getIntent().hasExtra("Receive")) {
+            Data data = (Data) getIntent().getSerializableExtra("Receive");
+            etName.setText(data.getName());
+            etNumber.setText(data.getNumber());
+        }
     }
 
     void initView() {
@@ -33,7 +38,8 @@ public class AddDataActivity extends AppCompatActivity {
                 Data data = CreatData(etName.getText().toString(), etNumber.getText().toString());
                 if (data != null) {
                     Intent intent = new Intent();
-                    intent.putExtra("Data", data);
+                    intent.putExtra("Receive", data);
+                    intent.putExtra("pos",getIntent().getIntExtra("pos",0));
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
